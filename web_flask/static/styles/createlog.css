@@ -1,0 +1,9 @@
+/* createlog.css */
+
+.dynamic-form {
+  margin-top: 20px; /* Add some space at the top of the form */
+}
+
+.dynamic-form div {
+  margin-bottom: 10px; /* Add margin between each field */
+}
