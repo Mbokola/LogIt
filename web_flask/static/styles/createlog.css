@@ -51,6 +51,8 @@
 body {
     background-image: url('../images/createlogbg.jpg');
     background-position: center;
+    background-size: cover; /* This will resize the background image to cover the entire viewport */
+    overflow: hidden; /* This will prevent scrolling */
 }
 
 .logname {
