@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     var addButton = document.querySelector('.add-button');
+    var form = document.querySelector('.dynamic-form');
+    var submitButton = form.querySelector('input[type="submit"]');
 
     function addField(event) {
-        var form = document.querySelector('.dynamic-form');
         var inputType = form.querySelector('.field-type').value;
 
         var container = document.createElement("div");
@@ -17,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
         removeButton.setAttribute("type", "button");
         removeButton.addEventListener("click", function() {
             form.removeChild(container);
-            if (form.firstChild.tagName === "BR") {
-                form.removeChild(form.firstChild);
+            if (form.lastChild.tagName === "BR") {
+                form.removeChild(form.lastChild);
             }
         });
 
@@ -26,13 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
         container.appendChild(input);
         container.appendChild(removeButton);
 
-        if (form.firstChild) {
-            form.insertBefore(container, form.firstChild.nextSibling);
-        } else {
-            form.appendChild(container);
-        }
-        if (!form.firstChild || form.firstChild.tagName !== "BR") {
-            form.insertBefore(document.createElement("br"), form.firstChild);
+        // Insert the new field container before the first button (addButton)
+        form.insertBefore(container, addButton);
+
+        if (!form.querySelector('.dynamic-form div')) {
+            form.insertBefore(document.createElement("br"), addButton); // Add a line break if no fields exist
         }
     }
 
