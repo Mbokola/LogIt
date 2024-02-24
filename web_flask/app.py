@@ -11,6 +11,13 @@ host = '0.0.0.0'
 port = 5001
 
 
+@app.route('/', strict_slashes=False)
+def logs():
+    """ Displays logs
+    """
+    return render_template('index.html')
+
+
 @app.route('/create', methods=['GET', 'POST'], strict_slashes=False)
 def create_log():
     """ Creates a log
