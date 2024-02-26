@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../static/styles/logs.css"> <!-- Linking to external CSS file -->
+    <link rel="stylesheet" href="../static/styles/logs.css">
 </head>
 <body>
 
@@ -22,26 +22,23 @@
     </nav>
 </header>
 
-<div class="sidebar">
-    <ul>
-        <li><a href="#">Create Log</a></li>
-        <li><a href="#">Show Log</a></li>
-        <li><a href="#">Update Log</a></li>
-        <li><a href="#">Delete Log</a></li>
-    </ul>
+<div class="content">
+    <div class="sidebar">
+        <ul>
+            <li><a href="#" id="create-log-link">Create Log</a></li>
+            <li><a href="#">Show Log</a></li>
+            <li><a href="#">Update Log</a></li>
+            <li><a href="#">Delete Log</a></li>
+        </ul>
+    </div>
+
+    <div class="logs">
+        <div id="logs-container" class="center-text">
+            <!-- Logs will be dynamically inserted here -->
+        </div>
+    </div>
 </div>
 
-<div class="center-text">
-    No Logs to display
-</div>
-
-<!-- Add your dashboard content here -->
-
-</body>
-</html>
-
-
-<!-- Add your dashboard content here -->
-
+<script src="../static/scripts/log.js"></script>
 </body>
 </html>

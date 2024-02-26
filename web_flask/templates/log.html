@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Log</title>
+    <link rel="stylesheet" href="../static/styles/logs.css"> <!-- Linking to external CSS file -->
+</head>
+<body>
+
+<header>
+    <div class="navbar">
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="Logo">
+        </div>
+        <h1> LogIt</h1>
+    </div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contacts</a>
+    </nav>
+</header>
+
+<div class="content">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/create">Create Log</a></li>
+            <li><a href="#">Show Log</a></li>
+            <li><a href="#">Update Log</a></li>
+            <li><a href="#">Delete Log</a></li>
+        </ul>
+    </div>
+    <div class="logs">
+        <h2>Create Log</h2>
+        <form method="post">
+            {% for field in log_fields %}
+            <label for="{{ field }}">{{ field }}:</label><br>
+            <input type="text" id="{{ field }}" name="{{ field }}"><br>
+            {% endfor %}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

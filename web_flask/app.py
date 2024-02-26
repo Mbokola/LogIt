@@ -2,7 +2,7 @@
 """ Flask application
 """
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from models.log import Log
 
 app = Flask(__name__)
@@ -27,7 +27,32 @@ def create_log():
         fields = request.form.getlist('text')
         if log_name not in logging.all_logs():
             logging.create_log(log_name, fields)
+        return redirect(url_for('logs'))
     return render_template('createlog.html')
+
+
+@app.route('/logs', strict_slashes=False)
+def all_logs():
+    """ Retrives all logs
+    """
+    all_logs = logging.all_logs()
+    return all_logs
+
+
+@app.route('/log/<log_name>', methods=['GET', 'POST'], strict_slashes=False)
+def log_fields(log_name):
+    """ Retrieves log fields
+    """
+    log_fields = logging.get_log_field(log_name)
+    del log_fields[0]
+    if request.method == 'POST':
+        data = {}
+        for field in log_fields:
+            data[field] = request.form[field]
+        logging.make_log_entry(log_name, data)
+
+    return render_template('log.html', log_fields=log_fields)
+
 
 
 if __name__ == '__main__':
