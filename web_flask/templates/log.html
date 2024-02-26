@@ -18,10 +18,10 @@
     </div>
     <div class="logs">
         <h2>Make Log Entry</h2>
-        <form action="/submit_log" method="post">
+        <form method="post">
             {% for field in log_fields %}
             <label for="{{ field }}">{{ field }}:</label>
-            <input type="text" id="{{ field }}" name="{{ field }}">
+            <textarea id="{{ field }}" name="{{ field }}" rows="4" required></textarea><br>
             {% endfor %}
             <input type="submit" value="Submit">
         </form>

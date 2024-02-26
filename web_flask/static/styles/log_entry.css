@@ -1,10 +1,12 @@
-/* styles.css */
+/* External CSS file: logs.css */
 
-/* Additional CSS styles for form fields */
 form {
     max-width: 900px; /* Limit the width of the form */
     margin: 0 auto; /* Center the form horizontally */
+}
 
+.logs {
+    margin-left: 20px; /* Bring the logs section to the left */
 }
 
 label {
@@ -36,6 +38,17 @@ input[type="submit"]:hover {
     background-color: #1c2e40; /* Darken background color on hover */
 }
 
+textarea {
+    width: calc(100% - 22px); /* Make text areas fill the entire width of their container */
+    padding: 10px; /* Add padding to text areas */
+    margin-bottom: 15px; /* Add space below text areas */
+    border: 1px solid #ccc; /* Add a border to text areas */
+    border-radius: 5px; /* Add border radius */
+    box-sizing: border-box; /* Include padding and border in the width */
+    resize: vertical; /* Allow vertical resizing */
+    height: 40px
+}
+
 .logs h2 {
-    padding-left: 200px; /* Bring the logs section to the left */
+    padding-left: 190px; /* Bring the logs section to the left */
 }

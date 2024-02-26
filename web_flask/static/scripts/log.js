@@ -42,4 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = `/log/${logName}`;
         }
     });
+
+    // Event listener for "Create Log" link click
+    document.getElementById('create-log-link').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default action
+        window.location.href = '/create'; // Redirect to Flask route
+    });
 });
