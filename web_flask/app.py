@@ -53,7 +53,11 @@ def log_fields(log_name):
 
     return render_template('log.html', log_fields=log_fields)
 
-
+@app.route('/log/view/<log_name>', strict_slashes=False)
+def view_logs(log_name):
+    """ Retrieves logs of log
+    """
+    return render_template('show_logs.html')
 
 if __name__ == '__main__':
     app.run(host=host, port=port)
