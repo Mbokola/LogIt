@@ -53,12 +53,19 @@ class DB:
         table = self.metadata.tables[log_name]
         table.drop(self._engine)
 
-    def del_entry(self):
+    def del_entry(self, log_name):
         """ Deletes log entry
         """
-        pass
+        query = self._session.query(log_name).all()
+        return query
 
     def create_table(self, log):
         """ Creates a table based on obj
         """
         log.metadata.create_all(self._engine)
+
+    def get(self, log_name):
+        """ Retrieves table entries
+        """
+        query = self._session.query(log_name).all()
+        return query

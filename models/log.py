@@ -1,4 +1,4 @@
-from db import DB, Base
+from .db import DB, Base
 from sqlalchemy import Column, Text, Integer
 
 
@@ -8,7 +8,7 @@ class Log:
     def __init__(self):
         """ Log initialization
         """
-        self.database = DB()
+        self._database = DB()
 
     def create_log(self, log_name, fields):
         """ Creates user log
@@ -21,18 +21,18 @@ class Log:
             attrs[field] = Column(field_type(length=length))
 
         log = type(log_name, (Base,), attrs)
-        self.database.create_table(log)
+        self._database.create_table(log)
 
     def all_logs(self):
         """ Retrieves all logs
         """
-        all_logs = [log for log in self.database.get_tables()]
+        all_logs = [log for log in self._database.get_tables()]
         return all_logs
 
     def get_log_field(self, log_name):
         """ Retrieves fields for a particular log
         """
-        all_logs = self.database.get_tables()
+        all_logs = self._database.get_tables()
         for log, fields in all_logs.items():
             if log == log_name:
                 log_fields = [field.name for field in fields.columns]
@@ -41,7 +41,14 @@ class Log:
     def make_log_entry(self, log_name, data):
         """ This will make entries into our log
         """
-        table = self.database.get_tables().get(log_name)
+        table = self._database.get_tables().get(log_name)
 
         log_entry = table.insert().values(data)
-        self.database.log_entry(log_entry)
+        self._database.log_entry(log_entry)
+
+    def retrieve_log(self, log_name):
+        """ Retrieves entries from log
+        """
+        table = self._database.get_tables().get(log_name)
+        logs = self._database.del_entry(table)
+        return logs
