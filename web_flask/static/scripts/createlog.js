@@ -37,11 +37,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addButton.addEventListener("click", addField);
 });
-
-// JavaScript to redirect when "Create Log" link is clicked
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('home-link').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default action
-        window.location.href = '/'; // Redirect to Flask route
-    });
-});
