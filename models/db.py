@@ -69,3 +69,11 @@ class DB:
         """
         query = self._session.query(log_name).all()
         return query
+
+    def get_row(self, log_name, criteria):
+        """ Retrieve a row based on id
+        """
+        query = self._session.query(log_name).filter_by(**criteria)
+        results = query.all()
+
+        return results

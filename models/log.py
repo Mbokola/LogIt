@@ -50,5 +50,12 @@ class Log:
         """ Retrieves entries from log
         """
         table = self._database.get_tables().get(log_name)
-        logs = self._database.del_entry(table)
+        logs = self._database.get(table)
         return logs
+
+    def get_log(self, log_name, criteria):
+        """ Retieves specific log entry
+        """
+        table = self._database.get_tables().get(log_name)
+        log = self._database.get_row(table, criteria)
+        return log
