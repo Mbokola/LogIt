@@ -53,11 +53,26 @@ def log_fields(log_name):
 
     return render_template('log.html', log_fields=log_fields)
 
+
 @app.route('/log/view/<log_name>', strict_slashes=False)
 def view_logs(log_name):
     """ Retrieves logs of log
     """
-    return render_template('show_logs.html')
+    fields = logging.get_log_field(log_name)
+    content = logging.retrieve_log(log_name)
+    return render_template('show_logs.html', log_name=log_name, log_fields=fields, content=content)
+
+
+@app.route('/log/<log_name>/page/<id>', strict_slashes=False)
+def view_page(log_name, id):
+    """ Expands a log
+    """
+    fields = logging.get_log_field(log_name)[1:]
+    log = logging.get_log(log_name, {"id": int(id)})
+    contents = list(log[0])[1:]
+    zipped_data = list(zip(fields, contents))
+
+    return render_template('display.html', zipped_data=zipped_data)
 
 if __name__ == '__main__':
     app.run(host=host, port=port)
