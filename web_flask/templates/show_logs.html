@@ -3,37 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='stylesheet' href="../../static/styles/show_log.css"/>
 <title>View Logs</title>
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    th, td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-    tr:hover {
-        cursor: pointer; /* Change cursor to pointer when hovering over a row */
-        background-color: #f0f0f0; /* Change background color when hovering over a row */
-    }
-    .tooltip {
-        visibility: hidden;
-        position: fixed;
-        background-color: #333;
-        color: #fff;
-        padding: 5px;
-        border-radius: 6px;
-        font-size: 12px;
-        transition: visibility 0.3s;
-    }
-</style>
 </head>
 <body>
+<header>
+    <div class="navbar">
+        <div class="logo">
+            <img src="../../static/images/logo.png" alt="Logo">
+        </div>
+        <h1> LogIt</h1>
+    </div>
+    <nav>
+        <a href="#" id="home-link">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contacts</a>
+    </nav>
+</header>
+
 
 <h2>{{ log_name }}</h2>
 
@@ -57,22 +44,7 @@
   </tbody>
 </table>
 
-<script>
-    function redirectToPage(logName, id) { // Modify to accept log name and ID
-        window.location.href = '/log/' + logName + '/page/' + id; // Concatenate log name and ID in the URL
-    }
-
-    function showTooltip(event) {
-        var tooltip = document.querySelector('.tooltip');
-        tooltip.style.visibility = 'visible';
-        tooltip.style.top = (event.clientY + 10) + 'px'; // Adjust tooltip's top position
-        tooltip.style.left = (event.clientX + 10) + 'px'; // Adjust tooltip's left position
-
-        setTimeout(function() {
-            tooltip.style.visibility = 'hidden'; // Hide the tooltip after 3 seconds
-        }, 3000); // 3000 milliseconds = 3 seconds
-    }
-</script>
-
+<script src="../../static/scripts/show_log.js"></script>
+<script src="../../static/scripts/nav.js"></script>
 </body>
 </html>

@@ -3,29 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../../static/styles/display.css">
 <title>View Log</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        padding: 20px;
-    }
-    h2 {
-        background-color: #f2f2f2; /* Background color for the heading */
-        padding: 10px 20px; /* Add padding to the heading */
-    }
-    h3 {
-        background-color: #f2f2f2; /* Background color for the fields */
-        padding: 10px 20px; /* Add padding to the fields */
-        margin-top: 20px; /* Add margin between fields */
-    }
-    p {
-        color: #666;
-        padding: 10px 20px; /* Add padding to the paragraphs */
-    }
-</style>
 </head>
 <body>
+<header>
+    <div class="navbar">
+        <div class="logo">
+            <img src="../../../static/images/logo.png" alt="Logo">
+        </div>
+        <h1> LogIt</h1>
+    </div>
+    <nav>
+        <a href="#" id="home-link">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contacts</a>
+    </nav>
+</header>
 
 <h2>View Log</h2>
 
@@ -34,5 +28,6 @@
 <p>{{ value }}</p>
 {% endfor %}
 
+<script src="../../../static/scripts/nav.js"></script>
 </body>
 </html>

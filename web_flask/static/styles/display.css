@@ -1,74 +1,34 @@
-/* createlog.css */
-
-/* Styles for the card container */
-.card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Styles for the card */
-.card {
-  background-color: rgba(249, 249, 249, 0.8);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 300px;
-  opacity: 0.8;
-}
-
-/* Styles for the form inside the card */
-.dynamic-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px; /* Add some space at the top of the form */
-}
-
-/* Styles for the input fields */
-.dynamic-form select,
-.dynamic-form input[type="submit"] {
-  padding: 10px;
-  margin-bottom: 10px; /* Add margin between each field */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-}
-
-/* Add padding within each field container */
-.dynamic-form div {
-  padding: 10px;
-}
-
-/* Hover effect for input fields */
-.dynamic-form select:hover,
-.dynamic-form input[type="submit"]:hover {
-  border-color: #999;
-}
-
 body {
-    background-image: url('../images/background.jpg');
-    background-position: center;
-    background-size: cover; /* This will resize the background image to cover the entire viewport */
-
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
 }
-
-.logname {
-    height: 35px;
-    margin-bottom: 15px; /* Add padding between the "Log Name" field and the next field */
+h2 {
+    background-color: #f2f2f2; /* Background color for the heading */
+    padding: 10px 20px; /* Add padding to the heading */
+}
+h3 {
+    background-color: #f2f2f2; /* Background color for the fields */
+    padding: 10px 20px; /* Add padding to the fields */
+    margin-top: 20px; /* Add margin between fields */
+}
+p {
+    color: #666;
+    padding: 10px 20px; /* Add padding to the paragraphs */
 }
 
 header {
     background-color: #2c3e50; /* Dark blue background */
     color: #fff;
-    padding: 10px 20px; /* Adjusted padding */
+    padding: 10px 30px; /* Adjusted padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative; /* Adding position relative to enable positioning of pseudo-element */
     margin-bottom: 50px;
-    margin-top: -10px;
-    margin-left: -20px;
+    margin-top: -30px;
+    margin-left: -30px;
+    margin-right: -20px;
     width: 100%;
 }
 
@@ -121,9 +81,4 @@ nav a {
 
 nav a:hover {
     color: #ffd700; /* Change to your desired hover color */
-}
-
-.content {
-    display: flex;
-    flex: 1;
 }
