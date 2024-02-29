@@ -6,12 +6,13 @@ from flask import Flask, render_template, request, redirect, url_for
 from models.log import Log
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 logging = Log()
 host = '0.0.0.0'
 port = 5001
 
 
-@app.route('/', strict_slashes=False)
+@app.route('/', methods=['GET', 'DELETE'], strict_slashes=False)
 def logs():
     """ Displays logs
     """
@@ -74,5 +75,21 @@ def view_page(log_name, id):
 
     return render_template('display.html', zipped_data=zipped_data)
 
+
+@app.route('/log/delete/<log_name>', methods=['DELETE'], strict_slashes=False)
+def del_log(log_name):
+    """ Deletes a log
+    """
+    logging.del_log(log_name)
+    return redirect(url_for('logs'))
+
+
+@app.route('/about', strict_slashes=False)
+def about():
+    """ Directs you to about page
+    """
+    return render_template("about.html")
+
+
 if __name__ == '__main__':
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, debug=True)
