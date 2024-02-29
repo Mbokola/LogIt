@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine, MetaData, or_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
-Base = declarative_base()
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
+from .user import Base, User
 
 
 class DB:
@@ -11,10 +12,13 @@ class DB:
     def __init__(self):
         """ Database initalization
         """
-        self._engine = create_engine("sqlite:///logs.db")
+        self._engine = create_engine("mysql+mysqlconnector://root:root/root@localhost:3306/logs")
+        self._auth_engine = create_engine('sqlite:///auth.db')
+        Base.metadata.create_all(self._auth_engine)
         self.metadata = MetaData()
         self.__session = None
-
+        self.__auth_session = None
+    # Following are definations for Logging functionality
     @property
     def _session(self):
         """ Creates database session
@@ -77,3 +81,47 @@ class DB:
         results = query.all()
 
         return results
+
+    # Following are definations for auth service
+
+    @property
+    def _authsession(self):
+        """ Creates authentication session
+        """
+        if self.__auth_session is None:
+            DBSession = sessionmaker(bind=self._auth_engine)
+            self.__auth_session = DBSession()
+        return self.__auth_session
+
+    def find_user_by(self, **kwargs):
+        """ Finds a user from the database based on kwargs """
+        try:
+            records = self._authsession.query(User).filter_by(**kwargs).first()
+            if records is None:
+                raise NoResultFound
+            return records
+        except InvalidRequestError as e:
+            raise e
+
+    def add_user(self, email, hashed_password):
+        """ Saves user to database and returns the user object
+        """
+        user = User(
+            email=email,
+            hashed_password=hashed_password
+        )
+        self._authsession.add(user)
+        self._authsession.commit()
+        return user
+
+    def update_user(self, user_id, **kwargs):
+        """ Updates user records
+        """
+        user_recods = self.find_user_by(id=user_id)
+
+        for key, new_value in kwargs.items():
+            if hasattr(user_recods, key):
+                setattr(user_recods, key, new_value)
+                self._authsession.commit()
+            else:
+                raise ValueError
