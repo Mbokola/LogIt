@@ -1,3 +1,5 @@
+Authors: Tony Mbokola
+
 ## LogIt
 
 LogIt is a tool that allows users to log information that is important to them.
