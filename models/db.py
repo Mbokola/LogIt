@@ -1,9 +1,10 @@
-from sqlalchemy import create_engine, MetaData, or_
+from sqlalchemy import create_engine, MetaData, or_, select
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from .user import Base, User
+from os import getenv
 
 
 class DB:
@@ -12,7 +13,10 @@ class DB:
     def __init__(self):
         """ Database initalization
         """
-        self._engine = create_engine("mysql+mysqlconnector://root:root/root@localhost:3306/logs")
+        user = getenv("USER")
+        password = getenv("PASSWORD")
+        host = getenv("HOST")
+        self._engine = create_engine(f"mysql+mysqlconnector://{user}:{password}@{host}:3306/logs")
         self._auth_engine = create_engine('sqlite:///auth.db')
         Base.metadata.create_all(self._auth_engine)
         self.metadata = MetaData()
@@ -25,15 +29,16 @@ class DB:
         """ Creates database session
         """
         if self.__session is None:
-            DBSession = sessionmaker(bind=self._engine)
-            self.__session = DBSession()
+            DBSession = Session(self._engine)
+            self.__session = DBSession
         return self.__session
 
     def log_entry(self, log_entry):
         """ Will add a log to the database
         """
-        self._session.execute(log_entry)
-        self._session.commit()
+        with self._session as session:
+            session.execute(log_entry)
+            session.commit()
 
     def get_tables(self):
         """ Retrieves all user logs
@@ -46,6 +51,7 @@ class DB:
     def find_by(self, log_name, keyword, column):
         """ Find logs based on keyword
         """
+
         query = self._session.query(log_name).filter(
             or_(log_name.column.ilike(f"%{keyword}%")))
 
@@ -59,6 +65,7 @@ class DB:
         table = self.metadata.tables[log_name]
         table.drop(self._engine)
         Base.metadata.remove(table)
+
 
     def del_entry(self, log_name):
         """ Deletes log entry
@@ -74,7 +81,8 @@ class DB:
     def get(self, log_name):
         """ Retrieves table entries
         """
-        query = self._session.query(log_name).all()
+        with self._session as session:
+            query = session.query(log_name).all()
         return query
 
     def get_row(self, log_name, criteria):
@@ -92,8 +100,8 @@ class DB:
         """ Creates authentication session
         """
         if self.__auth_session is None:
-            DBSession = sessionmaker(bind=self._auth_engine)
-            self.__auth_session = DBSession()
+            DBSession = Session(self._auth_engine)
+            self.__auth_session = DBSession
         return self.__auth_session
 
     def find_user_by(self, **kwargs):
