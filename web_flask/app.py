@@ -13,12 +13,21 @@ AUTH = Auth()
 host = '0.0.0.0'
 port = 5001
 
+def check_session(session_id):
+    """ Checks if session exists
+    """
+    record = AUTH.get_user_from_session_id(session_id)
+    return record
 
 # Logging app routes
 @app.route('/', strict_slashes=False)
 def logs():
     """ Displays logs
     """
+    session_id = request.cookies.get("session_id")
+    record = check_session(session_id)
+    if not record:
+        return redirect(url_for("login"))
     return render_template('about.html')
 
 
@@ -26,6 +35,10 @@ def logs():
 def home():
     """ Displays logs
     """
+    session_id = request.cookies.get("session_id")
+    record = check_session(session_id)
+    if not record:
+        return redirect(url_for("login"))
     return render_template('index.html')
 
 
@@ -33,12 +46,16 @@ def home():
 def create_log():
     """ Creates a log
     """
+    session_id = request.cookies.get("session_id")
+    record = check_session(session_id)
+    if not record:
+        return redirect(url_for("login"))
+
     if request.method == 'POST':
-        session_id = request.cookies.get("session_id")
-        record = AUTH.get_user_from_session_id(session_id)
         log_name = request.form['Log Name']
         log_name_with_email = f"{log_name}_{record.email}"
         fields = request.form.getlist('text')
+        print(log_name)
         if log_name_with_email not in logging.all_logs():
             logging.create_log(log_name_with_email, fields)
         return redirect(url_for('home'))
@@ -49,12 +66,12 @@ def create_log():
 def all_logs():
     """ Retrives all logs
     """
-    all_logs = logging.all_logs()
     session_id = request.cookies.get("session_id")
-    record = AUTH.get_user_from_session_id(session_id)
+    record = check_session(session_id)
     if not record:
         return redirect(url_for("login"))
-    record = AUTH.get_user_from_session_id(session_id)
+
+    all_logs = logging.all_logs()
     for idx, log in enumerate(all_logs):
         if log == "users":
             del all_logs[idx]
@@ -68,6 +85,8 @@ def log_fields(log_name):
     """
     session_id = request.cookies.get("session_id")
     record = AUTH.get_user_from_session_id(session_id)
+    if not record:
+        return redirect(url_for("login"))
     log_name_with_email = f"{log_name}_{record.email}"
     log_fields = logging.get_log_field(log_name_with_email)
     del log_fields[0]
@@ -86,6 +105,9 @@ def view_logs(log_name):
     """
     session_id = request.cookies.get("session_id")
     record = AUTH.get_user_from_session_id(session_id)
+    if not record:
+        return redirect(url_for("login"))
+
     log_name_with_email = f"{log_name}_{record.email}"
 
     fields = logging.get_log_field(log_name_with_email)
@@ -99,6 +121,9 @@ def view_page(log_name, id):
     """
     session_id = request.cookies.get("session_id")
     record = AUTH.get_user_from_session_id(session_id)
+    if not record:
+        return redirect(url_for("login"))
+
     log_name_with_email = f"{log_name}_{record.email}"
     fields = logging.get_log_field(log_name_with_email)[1:]
     log = logging.get_log(log_name_with_email, {"id": int(id)})
@@ -114,9 +139,12 @@ def del_log(log_name):
     """
     session_id = request.cookies.get("session_id")
     record = AUTH.get_user_from_session_id(session_id)
+    if not record:
+        return redirect(url_for("login"))
+
     log_name_with_email = f"{log_name}_{record.email}"
     logging.del_log(log_name_with_email)
-    return redirect(url_for('logs'))
+    return render_template('index.html')
 
 
 @app.route('/about', strict_slashes=False)

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             logsContainer.innerHTML = '<div class="center-text">No Logs to display</div>';
         } else {
             const logsList = document.createElement('ul');
-
+          console.log(data)
             // Iterate through each log and create list item
             data.forEach(log => {
                 const logItem = document.createElement('li');
