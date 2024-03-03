@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         input.setAttribute("type", inputType);
         input.setAttribute("name", inputType.toLowerCase());
+        input.setAttribute("required", "required"); // Add required attribute
         label.innerHTML = inputType + ": ";
         removeButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         removeButton.setAttribute("type", "button");
