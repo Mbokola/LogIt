@@ -19,6 +19,7 @@ class DB:
         self.__session = None
         self.__auth_session = None
     # Following are definations for Logging functionality
+
     @property
     def _session(self):
         """ Creates database session
@@ -37,6 +38,7 @@ class DB:
     def get_tables(self):
         """ Retrieves all user logs
         """
+        self.metadata.clear()
         self.metadata.reflect(bind=self._engine)
         tables = self.metadata.tables
         return tables
@@ -56,6 +58,7 @@ class DB:
         """
         table = self.metadata.tables[log_name]
         table.drop(self._engine)
+        Base.metadata.remove(table)
 
     def del_entry(self, log_name):
         """ Deletes log entry
