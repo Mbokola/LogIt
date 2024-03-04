@@ -13,11 +13,13 @@ AUTH = Auth()
 host = '0.0.0.0'
 port = 5001
 
+
 def check_session(session_id):
     """ Checks if session exists
     """
     record = AUTH.get_user_from_session_id(session_id)
     return record
+
 
 # Logging app routes
 @app.route('/', strict_slashes=False)
@@ -165,12 +167,12 @@ def users():
             password = request.form.get("password")
             print(email)
             print(password)
-            created_user = AUTH.register_user(email, password)
+            AUTH.register_user(email, password)
 
             return render_template("login.html")
 
         except ValueError:
-            return "email already registered"
+            print("email already registered")
     return render_template("login.html")
 
 
@@ -215,9 +217,9 @@ def get_reset_password_token():
     email = request.form.get("email")
     try:
         reset_token = AUTH.get_reset_password_token(email)
-        return "Succsful"
+        return "Succesful"
     except ValueError:
-        return "unsccesful"
+        return "unsucessful"
 
 
 @app.route("/reset_password", methods=["PUT"], strict_slashes=False)
@@ -234,7 +236,7 @@ def update_password():
         AUTH.update_password(reset_token, new_password)
         return "succesful"
     except (NoResultFound, ValueError):
-        return "unsccesful"
+        return "unsucessful"
 
 
 if __name__ == '__main__':
