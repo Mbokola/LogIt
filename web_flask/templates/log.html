@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Log</title>
     <link rel="stylesheet" href="../static/styles/log_entry.css"> <!-- Linking to external CSS file -->
+    <script src="https://cdn.tiny.cloud/1/ynyzq4mfwis4h02efj3cjjr55votsjk5kdjlz2c9zi6cvljc/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
 
@@ -21,22 +22,29 @@
         <a href="#">Contacts</a>
     </nav>
 </header>
-
 <div class="content">
     <div class="sidebar">
         <!-- Sidebar content goes here -->
     </div>
     <div class="logs">
         <h2>Make Log Entry</h2>
-        <form method="post">
+        <form method="POST">
             {% for field in log_fields %}
             <label for="{{ field }}">{{ field }}:</label>
-            <textarea id="{{ field }}" name="{{ field }}" rows="4" required></textarea><br>
+            <textarea id="{{ field }}" name="{{ field }}" rows="4"></textarea><br>
             {% endfor %}
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" id="submitBtn">
         </form>
     </div>
 </div>
 <script src="../../static/scripts/nav.js"></script>
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    height: 200,
+  });
+</script>
 </body>
 </html>

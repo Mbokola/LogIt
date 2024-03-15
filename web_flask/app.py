@@ -26,10 +26,6 @@ def check_session(session_id):
 def logs():
     """ Displays logs
     """
-    session_id = request.cookies.get("session_id")
-    record = check_session(session_id)
-    if not record:
-        return redirect(url_for("login"))
     return render_template('about.html')
 
 
@@ -57,7 +53,6 @@ def create_log():
         log_name = request.form['Log Name']
         log_name_with_email = f"{log_name}_{record.email}"
         fields = request.form.getlist('text')
-        print(log_name)
         if log_name_with_email not in logging.all_logs():
             logging.create_log(log_name_with_email, fields)
         return redirect(url_for('home'))
@@ -85,6 +80,7 @@ def all_logs():
 def log_fields(log_name):
     """ Retrieves log fields
     """
+    print("Heeeeeeeeeeeeeeeeeee")
     session_id = request.cookies.get("session_id")
     record = AUTH.get_user_from_session_id(session_id)
     if not record:

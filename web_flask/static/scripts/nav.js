@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// JavaScript to redirect when "Submit" link is clicked
+// JavaScript to redirect when "Submit" link is clicked when creating log
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('logout').addEventListener('click', function(event) {
         event.preventDefault(); // Prevent the default action

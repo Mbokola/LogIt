@@ -32,16 +32,16 @@
       {% endfor %}
     </tr>
   </thead>
-  <tbody>
+<tbody>
     {% for row in content %}
     <tr onclick="redirectToPage('{{ log_name }}', '{{ row.id }}');" onmousemove="showTooltip(event);"> <!-- Modify to pass log name and ID -->
       {% for value in row %}
-      <td>{{ value }}</td>
+      <td>{{ value | safe }}</td> <!-- Apply safe filter to render HTML content -->
       {% endfor %}
       <td><span class="tooltip">Click to open log</span></td> <!-- Add tooltip -->
     </tr>
     {% endfor %}
-  </tbody>
+</tbody>
 </table>
 
 <script src="../../static/scripts/show_log.js"></script>
