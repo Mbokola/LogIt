@@ -80,7 +80,6 @@ def all_logs():
 def log_fields(log_name):
     """ Retrieves log fields
     """
-    print("Heeeeeeeeeeeeeeeeeee")
     session_id = request.cookies.get("session_id")
     record = AUTH.get_user_from_session_id(session_id)
     if not record:
