@@ -33,6 +33,7 @@ class Log:
         """ Retrieves fields for a particular log
         """
         all_logs = self._database.get_tables()
+        log_fields = []
         for log, fields in all_logs.items():
             if log == log_name:
                 log_fields = [field.name for field in fields.columns]
