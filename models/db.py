@@ -51,12 +51,10 @@ class DB:
     def find_by(self, log_name, keyword, column):
         """ Find logs based on keyword
         """
-
-        query = self._session.query(log_name).filter(
-            or_(log_name.column.ilike(f"%{keyword}%")))
-
-        result = query.all()
-
+        with self._session as session:
+            query = session.query(log_name).filter(
+                or_(log_name.column.ilike(f"%{keyword}%")))
+            result = query.all()
         return result
 
     def del_log(self, log_name):
@@ -66,11 +64,11 @@ class DB:
         table.drop(self._engine)
         Base.metadata.remove(table)
 
-
     def del_entry(self, log_name):
         """ Deletes log entry
         """
-        query = self._session.query(log_name).all()
+        with self._session as session:
+            query = session.query(log_name).all()
         return query
 
     def create_table(self, log):
@@ -88,9 +86,9 @@ class DB:
     def get_row(self, log_name, criteria):
         """ Retrieve a row based on id
         """
-        query = self._session.query(log_name).filter_by(**criteria)
-        results = query.all()
-
+        with self._session as session:
+            query = session.query(log_name).filter_by(**criteria)
+            results = query.all()
         return results
 
     # Following are definations for auth service
@@ -107,7 +105,8 @@ class DB:
     def find_user_by(self, **kwargs):
         """ Finds a user from the database based on kwargs """
         try:
-            records = self._authsession.query(User).filter_by(**kwargs).first()
+            with self._authsession as session:
+                records = session.query(User).filter_by(**kwargs).first()
             if records is None:
                 raise NoResultFound
             return records
@@ -121,18 +120,19 @@ class DB:
             email=email,
             hashed_password=hashed_password
         )
-        self._authsession.add(user)
-        self._authsession.commit()
+        with self._authsession as session:
+            session.add(user)
+            session.commit()
         return user
 
     def update_user(self, user_id, **kwargs):
         """ Updates user records
         """
         user_recods = self.find_user_by(id=user_id)
-
-        for key, new_value in kwargs.items():
-            if hasattr(user_recods, key):
-                setattr(user_recods, key, new_value)
-                self._authsession.commit()
-            else:
-                raise ValueError
+        with self._authsession as session:
+            for key, new_value in kwargs.items():
+                if hasattr(user_recods, key):
+                    setattr(user_recods, key, new_value)
+                    session.commit()
+                else:
+                    raise ValueError
