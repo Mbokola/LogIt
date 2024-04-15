@@ -63,10 +63,11 @@ class Auth:
         """ Updates the session_id entry of a user in the database
         """
         try:
-            existing_user = self._db.find_user_by(email=email)
-            session_id = _generate_uuid()
-            existing_user.session_id = session_id
-            self._db._authsession.commit()
+            with self._db._authsession as session:
+                existing_user = session.query(User).filter_by(email=email).first()
+                session_id = _generate_uuid()
+                existing_user.session_id = session_id
+                session.commit()
             return session_id
         except NoResultFound:
             return None
