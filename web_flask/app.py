@@ -160,8 +160,6 @@ def users():
         try:
             email = request.form.get("your_email")
             password = request.form.get("password")
-            print(email)
-            print(password)
             AUTH.register_user(email, password)
 
             return render_template("login.html")
@@ -182,11 +180,9 @@ def login():
         result = AUTH.valid_login(email, password)
 
         if result:
-
             session_id = AUTH.create_session(email)
             response = make_response(redirect(url_for("home")))
             response.set_cookie("session_id", session_id)
-
             return response
 
     return render_template("login.html")
@@ -221,7 +217,6 @@ def get_reset_password_token():
 def update_password():
     """ Updates the users' password
     """
-    print(request.form.items())
     email = request.form.get("your_email")
     new_password = request.form.get("new_password")
     reset_token = request.form.get("reset_token")
