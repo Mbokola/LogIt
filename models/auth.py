@@ -51,8 +51,9 @@ class Auth:
         try:
             existing_user = self._db.find_user_by(email=email)
             password_byte_encoding = password.encode('utf-8')
+            hashed_password_byte_encoding = existing_user.hashed_password.encode('utf-8')
             result = bcrypt.checkpw(password_byte_encoding,
-                                    existing_user.hashed_password)
+                                    hashed_password_byte_encoding)
 
             return result
 
