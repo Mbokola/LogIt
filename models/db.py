@@ -17,7 +17,7 @@ class DB:
         password = getenv("PASSWORD")
         host = getenv("HOST")
         self._engine = create_engine(f"mysql+mysqlconnector://{user}:{password}@{host}:3306/logs")
-        self._auth_engine = create_engine('sqlite:///auth.db')
+        self._auth_engine = create_engine(f'mysql+mysqlconnector://{user}:{password}@{host}:3306/auth')
         Base.metadata.create_all(self._auth_engine)
         self.metadata = MetaData()
         self.__session = None
