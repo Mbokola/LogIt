@@ -2,3 +2,4 @@ Flask==2.3.3
 bcrypt==3.2.0
 SQLAlchemy==2.0.20
 mysql-connector-python
+gunicorn==20.0.4

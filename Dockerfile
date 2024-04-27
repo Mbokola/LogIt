@@ -7,9 +7,6 @@ WORKDIR /LogIt
 # Copy contents including dependencies to working directory
 COPY . .
 
-# Install mysql
-RUN apt-get update && apt-get install -y default-mysql-client
-
 # Install virtualenv
 RUN pip install virtualenv
 
@@ -26,4 +23,4 @@ WORKDIR /LogIt/web_flask
 EXPOSE 5001
 
 # Run Flask app
-CMD ["/LogIt/venv/bin/python", "app.py"]
+CMD ["/LogIt/venv/bin/gunicorn", "-w", "4", "--bind", "0.0.0.0:5001", "app:app"]
