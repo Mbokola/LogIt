@@ -16,8 +16,8 @@ class DB:
         user = getenv("USER")
         password = getenv("PASSWORD")
         host = getenv("HOST")
-        self._engine = create_engine(f"postgresql://{user}:{password}@{host}:5432/logs")
-        self._auth_engine = create_engine(f"postgresql://{user}:{password}@{host}:5432/auth")
+        self._engine = create_engine(f"postgresql+psycopg2://{user}:{password}@{host}:5432/logs?sslmode=require")
+        self._auth_engine = self._auth_engine = create_engine(f"postgresql+psycopg2://{user}:{password}@{host}:5432/auth?sslmode=require")
         Base.metadata.create_all(self._auth_engine)
         self.metadata = MetaData()
         self.__session = None
