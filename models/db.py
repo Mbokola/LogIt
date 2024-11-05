@@ -16,8 +16,8 @@ class DB:
         user = getenv("USER")
         password = getenv("PASSWORD")
         host = getenv("HOST")
-        self._engine = create_engine(f"mysql+mysqlconnector://{user}:{password}@{host}:3306/logs")
-        self._auth_engine = create_engine(f'mysql+mysqlconnector://{user}:{password}@{host}:3306/auth')
+        self._engine = create_engine(f"postgresql://{user}:{password}@{host}:5432/logs")
+        self._auth_engine = create_engine(f"postgresql://{user}:{password}@{host}:5432/auth")
         Base.metadata.create_all(self._auth_engine)
         self.metadata = MetaData()
         self.__session = None
