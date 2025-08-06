@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Flask application
 """
-
 from models.auth import Auth
 from flask import Flask, render_template, request, redirect, url_for, make_response
 from models.log import Log
